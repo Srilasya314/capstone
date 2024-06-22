@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://dnm.nflximg.net/api/v6/2DuQlx0fM4wd1nzqm5BFBi6ILa8/AAAAQZKoctvyr8pFITrRsheYcQC9hb_YGnY2-9tc8VE73bYgwdkNap5IhX2YkJEA8pu2YOFLesedW_L2OuySYC-tAdXujxmSZJk3cUkCzEE-RjzTSw0UYrnp5dl-EFtsOKSESj9XcydHz7T_9fR9bSaPn8Fx.jpg?r=66e');
+            background-size: cover;
+            color: #ffffff;
+            background-color:rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            background-color: rgba(11, 10, 10, 0.9);
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #949090;
+        }
+        form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: rgba(11, 10, 10, 0.6);
+            color: #ffffff;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #1e446d;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            border: 1px solid #333;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #2c2c2c;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        h3 {
+            margin: 0;
+        }
+        p {
+            color: #aba2a2;
+            margin: 5px 0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #444;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search and Browse some Books :)</h1>
+        <form action="/search-books" method="get">
+            <input type="text" name="q" placeholder="Search for books" value="<%= searchTerm || '' %>">
+            <button type="submit">Search</button>
+        </form>
+
+
+    <% if (showResults) { %>
+        <h2>Search Results for "<%= searchTerm %>":</h2>
+        <ul>
+        <% if (searchResults && searchResults.length > 0) { %>
+            <% searchResults.forEach(result => { %>
+                <li>
+                    <h3><%= result.title %></h3>
+                    <p>Author: <%= result.author %></p>
+                    <p>Published Year: <%= result.publishedYear %></p>
+                    <% if (result.coverUrl) { %>
+                        <img src="<%= result.coverUrl %>" alt="Book Cover">
+                    <% } else { %>
+                        <p>No cover available</p>
+                    <% } %>
+                </li>
+            <% }); %>
+        <% } else { %>
+            <li>No results from the Google Books API.</li>
+        <% } %>
+    </ul>
+    <% } else { %>
+        <p>Enter a search query to see results.</p>
+    <% } %>
+</body>
+</html>
